@@ -178,6 +178,7 @@ namespace osu.Game.Configuration
             Set(OsuConfig.Ticker, false);
             Set(OsuConfig.CompatibilityContext, false);
             Set(OsuConfig.CanForceOptimusCompatibility, true);
+            Set(OsuConfig.SongSelectRightClickDrag, false);
         }
 
         //todo: make a UnicodeString class/struct rather than requiring this helper method.
@@ -345,5 +346,6 @@ namespace osu.Game.Configuration
         Ticker,
         CompatibilityContext,
         CanForceOptimusCompatibility,
+        SongSelectRightClickDrag,
     }
 }
