@@ -14,6 +14,9 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Lists;
 using osu.Game.Beatmaps.Drawables;
 using osu.Framework.Timing;
+using osu.Framework.Allocation;
+using osu.Game.Configuration;
+using osu.Framework.Input;
 
 namespace osu.Game.Screens.Select
 {
