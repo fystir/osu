@@ -27,6 +27,8 @@ namespace osu.Game.Screens.Select
 
         private List<float> yPositions = new List<float>();
         private CarouselLifetimeList<Panel> Lifetime;
+        
+        private bool rightClickDrag;
 
         public CarouselContainer()
         {
@@ -188,6 +190,38 @@ namespace osu.Game.Screens.Select
             float x = (CIRCLE_RADIUS - (float)Math.Sqrt(discriminant)) * halfHeight;
 
             return 125 + x;
+        }
+        
+        [BackgroundDependencyLoader]
+        private void load(OsuConfigManager config)
+        {
+            rightClickDrag = config.GetBindable<bool>(OsuConfig.SongSelectRightClickDrag);
+        }
+
+        protected override bool OnClick(InputState state)
+        {
+            if (rightClickDrag && state.Mouse.RightButton)
+                ScrollTo((state.Mouse.Position.Y - DrawRectangle.Y) / DrawHeight * scrollableExtent);
+            return base.OnClick(state);
+        }
+
+        private bool performFlickEvent;
+
+        protected override void OnDragBehavior(InputState state)
+        {
+            if (!rightClickDrag || state.Mouse.LeftButton)
+            {
+                performFlickEvent = true;
+                base.OnDragBehavior(state);
+            }
+            else if (state.Mouse.RightButton)
+                ScrollTo((state.Mouse.Position.Y - DrawRectangle.Y) / DrawHeight * scrollableExtent);
+        }
+
+        protected override void OnDragEndBehavior(InputState state)
+        {
+            if(performFlickEvent)
+                base.OnDragEndBehavior(state);
         }
 
         protected override void Update()
